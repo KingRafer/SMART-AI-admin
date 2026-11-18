@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login — Smart AI Admin</title>
+  <title>Admin Login — Smart AI</title>
   <meta name="theme-color" content="#070b14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,52 +13,63 @@
 </head>
 <body>
   <div class="login-layout">
+    <!-- Panel brand -->
     <aside class="login-aside">
-      <div class="aside-inner">
-        <div class="brand">
-          <span class="brand-mark"><i data-icon="zap"></i></span>
-          <div><strong>SMART<span>AI</span></strong><small>Admin Panel</small></div>
-        </div>
-        <h2>Kelola platform<br>dengan mudah.</h2>
-        <p>Panel admin untuk mengelola member, akun trading, komisi, dan referral Smart AI.</p>
+      <div class="aside-top">
+        <div class="logo"><span class="logo-mark"><i data-icon="zap"></i></span><strong>SMART<span>AI</span></strong></div>
+      </div>
+      <div class="aside-main">
+        <h2>Kendalikan seluruh operasional <em>Smart AI</em> dari satu panel.</h2>
+        <p>Pantau member, akun trading, komisi, dan referral secara real-time dengan tampilan yang ringkas dan aman.</p>
         <ul class="features">
-          <li><i data-icon="check"></i> Manajemen member & approval</li>
-          <li><i data-icon="check"></i> Tracking akun trading</li>
-          <li><i data-icon="check"></i> Komisi & referral</li>
-          <li><i data-icon="check"></i> Activity log real-time</li>
+          <li><span class="f-ico"><i data-icon="users"></i></span><div><b>Manajemen member</b><small>Approve, aktifkan, dan kelola paket</small></div></li>
+          <li><span class="f-ico"><i data-icon="trending-up"></i></span><div><b>Monitor akun trading</b><small>Equity &amp; profit harian per akun MT5</small></div></li>
+          <li><span class="f-ico"><i data-icon="wallet"></i></span><div><b>Komisi &amp; referral</b><small>Payout sekali klik, kode referral lengkap</small></div></li>
         </ul>
       </div>
+      <div class="aside-foot">&copy; 2026 Smart AI. Semua hak dilindungi.</div>
     </aside>
 
+    <!-- Panel form -->
     <main class="login-main">
-      <div class="mobile-logo">
-        <span class="brand-mark"><i data-icon="zap"></i></span>
-        <strong>SMART<span>AI</span></strong>
-      </div>
-      <div class="login-card">
-        <h1>Masuk Admin</h1>
-        <p class="subtitle">Gunakan akun admin untuk mengakses panel</p>
-        <form id="login-form" autocomplete="on">
-          <div class="field">
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="Ganti tema"></button>
+      <div class="shell">
+        <a class="back" href="https://smartai-landing-delta.vercel.app/"><i data-icon="arrow-left"></i>Kembali ke beranda</a>
+        <div class="mobile-logo"><div class="logo"><span class="logo-mark"><i data-icon="zap"></i></span><strong>SMART<span>AI</span></strong></div></div>
+
+        <h1>Masuk ke panel</h1>
+        <p class="sub">Kelola member, akun trading, dan komisi.</p>
+
+        <div class="demo">
+          <span class="demo-ico"><i data-icon="info"></i></span>
+          <div class="demo-text">
+            <strong>Akun demo sudah terisi otomatis</strong>
+            <code id="demo-email">admin@smartai.id</code> · <code id="demo-pass">admin123</code>
+          </div>
+          <button type="button" class="demo-fill" id="demo-fill">Isi ulang</button>
+        </div>
+
+        <form id="form" novalidate>
+          <div class="fg">
             <label for="email">Email</label>
             <div class="input-wrap">
               <i data-icon="mail"></i>
-              <input type="email" id="email" name="email" placeholder="admin@smartai.id" required autocomplete="username">
+              <input type="text" id="email" value="admin@smartai.id" placeholder="admin@smartai.id" autocomplete="username" inputmode="email" required>
             </div>
           </div>
-          <div class="field">
+          <div class="fg">
             <label for="password">Password</label>
             <div class="input-wrap">
               <i data-icon="lock"></i>
-              <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
-              <button type="button" class="toggle-pw" data-toggle-pw aria-label="Tampilkan password"><i data-icon="eye"></i></button>
+              <input type="password" id="password" value="admin123" placeholder="••••••••" autocomplete="current-password" required>
+              <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Lihat sandi"><i data-icon="eye"></i></button>
             </div>
           </div>
-          <button type="submit" class="btn-primary" id="login-btn">Masuk</button>
+          <button type="submit" class="btn" id="btn">Masuk<i data-icon="arrow-right"></i></button>
         </form>
-        <p class="hint">Demo: admin@smartai.id / admin123</p>
+        <div id="msg" class="msg" role="alert" hidden></div>
+        <p class="copyright">Smart AI Admin Console</p>
       </div>
-      <p class="copyright">© 2025 Smart AI. All rights reserved.</p>
     </main>
   </div>
 
