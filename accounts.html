@@ -43,57 +43,64 @@
     </aside>
     <div class="sidebar-backdrop" id="backdrop"></div>
 
-    <!-- Main -->
-    <div class="main">
+    <div class="main-wrap">
+      <!-- Topbar -->
       <header class="topbar">
-        <button type="button" class="icon-btn" id="menu-btn" aria-label="Menu"><i data-icon="menu"></i></button>
-        <div class="topbar-title">
-          <h1>Trading Accounts</h1>
-          <p>Kelola akun trading member</p>
-        </div>
+        <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-label="Menu"><i data-icon="menu"></i></button>
+        <div class="topbar-title">Trading Accounts</div>
         <div class="topbar-actions">
-          <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle theme"><i data-icon="moon"></i></button>
+          <button type="button" class="icon-btn" id="notif-btn" title="Notifikasi" aria-label="Notifikasi">
+            <i data-icon="bell"></i><span class="dot" id="notif-dot" hidden></span>
+          </button>
+          <button type="button" class="icon-btn" id="theme-btn" aria-label="Ganti tema"></button>
+          <a class="btn-ghost-sm" href="https://smartai-landing-delta.vercel.app/" target="_blank" rel="noopener"><i data-icon="external-link"></i><span>Landing</span></a>
         </div>
       </header>
 
-      <div class="page" id="page-accounts">
-        <div class="toolbar">
-          <div class="search-box">
-            <i data-icon="search"></i>
-            <input type="search" id="acc-search" placeholder="Cari akun / member..." autocomplete="off">
-          </div>
-          <div class="filters">
-            <select id="acc-status">
-              <option value="">Semua status</option>
-              <option value="active">Active</option>
-              <option value="pending">Pending</option>
-              <option value="suspended">Suspended</option>
-            </select>
-          </div>
+      <!-- Konten halaman -->
+      <main class="page">
+        <div class="page-header">
+          <div><h1>Trading Accounts</h1><p>Monitor &amp; toggle status akun EA / MT5.</p></div>
         </div>
-
-        <div class="table-card">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Member</th>
-                  <th>Platform</th>
-                  <th>Account</th>
-                  <th>Balance</th>
-                  <th>Status</th>
-                  <th>Joined</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="acc-tbody"></tbody>
-            </table>
-          </div>
-          <div class="table-empty" id="acc-empty" hidden>Tidak ada akun trading.</div>
+        <section class="stats-grid">
+      <article class="stat-card" style="--accent:var(--cyan)">
+        <div class="stat-icon"><i data-icon="trending-up"></i></div>
+        <div class="stat-info">
+          <div class="label">Accounts</div>
+          <div class="value" id="st-total">0</div>
         </div>
-      </div>
+      </article>
+      <article class="stat-card" style="--accent:var(--green)">
+        <div class="stat-icon"><i data-icon="radio"></i></div>
+        <div class="stat-info">
+          <div class="label">Online</div>
+          <div class="value up" id="st-online">0</div>
+        </div>
+      </article>
+      <article class="stat-card" style="--accent:var(--purple)">
+        <div class="stat-icon"><i data-icon="layers"></i></div>
+        <div class="stat-info">
+          <div class="label">Total Equity</div>
+          <div class="value" id="st-equity">$0</div>
+        </div>
+      </article>
+      <article class="stat-card" style="--accent:var(--gold)">
+        <div class="stat-icon"><i data-icon="wallet"></i></div>
+        <div class="stat-info">
+          <div class="label">Daily Profit</div>
+          <div class="value up" id="st-daily">$0</div>
+        </div>
+      </article>
+        </section>
+          <section class="panel">
+            <div class="panel-head"><h2><i data-icon="trending-up"></i>Semua akun</h2></div>
+            <div class="table-wrap"><table><thead><tr><th>Account</th><th>Owner</th><th>Paket</th><th>Deposit</th><th>Equity</th><th>Daily</th><th>Status</th><th style="text-align:right">Aksi</th></tr></thead><tbody id="tbody"></tbody></table></div>
+          </section>
+      </main>
     </div>
   </div>
+
+  <div class="toast-wrap" id="toast-wrap"></div>
 
   <script src="js/icons.js"></script>
   <script src="js/auth-admin.js"></script>
