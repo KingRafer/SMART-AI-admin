@@ -18,7 +18,7 @@ if (initShell()) {
 
     document.getElementById('tbody').innerHTML = rows.map(function (r) {
       return '<tr data-id="' + r.id + '">' +
-        '<td><div class="cell-user">' + avatar(r.nama) + '<b>' + escapeHtml(r.nama) + '</b></div></td>' +
+        '<td><div class="cell-user">' + avatar(r.nama) + '<div><b>' + escapeHtml(r.nama) + '</b></div></div></td>' +
         '<td><span class="badge purple plain">' + escapeHtml(r.level) + '</span></td>' +
         '<td><b>' + money(r.amount) + '</b></td><td>' + statusBadge(r.status) + '</td><td>' + escapeHtml(r.date) + '</td>' +
         '<td><div class="row-actions">' +

@@ -1,29 +1,36 @@
 /* Halaman Referrals */
 if (initShell()) {
-  var rows = getData().referrals || [];
-  var total = function (k) { return rows.reduce(function (s, r) { return s + r[k]; }, 0); };
+  function render() {
+    var rows = getData().referrals || [];
+    setText('st-total', rows.length);
+    var active = rows.filter(function (r) { return r.status === 'Active'; }).length;
+    setText('st-active', active);
+    setText('st-inactive', rows.length - active);
 
-  setText('st-codes', rows.length);
-  setText('st-invited', total('invited'));
-  setText('st-active', total('active'));
-  setText('st-comm', money(total('commission')));
-
-  document.getElementById('tbody').innerHTML = rows.map(function (r) {
-    return '<tr><td><span class="badge info plain mono">' + escapeHtml(r.code) + '</span></td>' +
-      '<td><div class="cell-user">' + avatar(r.owner) + '<b>' + escapeHtml(r.owner) + '</b></div></td>' +
-      '<td>' + r.invited + '</td><td>' + r.active + '</td><td>' + money(r.commission) + '</td>' +
-      '<td><div class="row-actions"><button type="button" class="btn btn-outline btn-sm" data-copy="' + escapeHtml(r.code) + '">' + icon('copy') + 'Salin</button></div></td></tr>';
-  }).join('');
+    document.getElementById('tbody').innerHTML = rows.length
+      ? rows.map(function (r) {
+      return '<tr>' +
+        '<td><div class="cell-user">' + avatar(r.owner) + '<div><b>' + escapeHtml(r.owner) + '</b></div></div></td>' +
+        '<td class="mono">' + escapeHtml(r.code) + '</td>' +
+        '<td>' + (r.joins || 0) + '</td>' +
+        '<td>' + money(r.earned || 0) + '</td>' +
+        '<td>' + statusBadge(r.status) + '</td>' +
+        '<td><div class="row-actions"><button type="button" class="btn btn-outline btn-sm" data-copy="' + escapeHtml(r.code) + '">' + icon('copy') + 'Copy</button></div></td></tr>';
+    }).join('')
+      : '<tr><td colspan="6"><div class="empty-state">' + icon('inbox') + 'Belum ada data referral</div></td></tr>';
+  }
 
   document.getElementById('tbody').addEventListener('click', function (e) {
     var btn = e.target.closest('[data-copy]');
     if (!btn) return;
     var code = btn.getAttribute('data-copy');
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(code).then(function () { toast('Kode disalin: ' + code, 'ok'); });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(function () { toast('Kode ' + code + ' disalin', 'ok'); });
     } else {
-      toast(code, 'ok');
+      toast('Kode: ' + code, 'ok');
     }
   });
+
+  render();
   hydrateIcons();
 }

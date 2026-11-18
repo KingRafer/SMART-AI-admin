@@ -1,10 +1,10 @@
 /* Halaman Dashboard */
 if (initShell()) {
-  var d = getData();
-  var members = d.members || [];
-  var accounts = d.accounts || [];
-  var commissions = d.commissions || [];
-  var activity = d.activity || [];
+  var data = getData();
+  var members = data.members || [];
+  var accounts = data.accounts || [];
+  var commissions = data.commissions || [];
+  var activity = data.activity || [];
 
   var active = members.filter(function (m) { return m.status === 'Active'; }).length;
   var pending = members.filter(function (m) { return m.status === 'Pending'; }).length;
@@ -35,7 +35,7 @@ if (initShell()) {
   var days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
   var maxBar = Math.max.apply(null, weekBars);
   document.getElementById('bar-chart').innerHTML = weekBars.map(function (v, i) {
-    return '<div class="bar-col"><div class="bar" style="height:' + Math.round(v / maxBar * 100) + '%"><span>' + v + '</span></div><small>' + days[i] + '</small></div>';
+    return '<div class="bar-col"><div class="bar" style="height:' + Math.round(v / maxBar * 100) + '%" data-val="' + v + '"></div><span>' + days[i] + '</span></div>';
   }).join('');
 
   /* Aktivitas terbaru */

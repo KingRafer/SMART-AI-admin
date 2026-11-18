@@ -15,7 +15,7 @@ if (initShell()) {
       var isOn = a.status === 'Online';
       return '<tr data-id="' + escapeHtml(a.id) + '">' +
         '<td class="mono"><b>' + escapeHtml(a.id) + '</b></td>' +
-        '<td><div class="cell-user">' + avatar(a.owner) + '<b>' + escapeHtml(a.owner) + '</b></div></td>' +
+        '<td><div class="cell-user">' + avatar(a.owner) + '<div><b>' + escapeHtml(a.owner) + '</b></div></div></td>' +
         '<td>' + packageBadge(a.paket) + '</td>' +
         '<td>' + money(a.deposit) + '</td><td>' + money(a.equity) + '</td>' +
         '<td class="' + (a.daily > 0 ? 'up' : 'muted') + '">' + signedMoney(a.daily) + '</td>' +
