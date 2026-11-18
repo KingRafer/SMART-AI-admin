@@ -1,61 +1,48 @@
-/* Auth admin — demo login, session, logout */
-const DEMO_ADMIN = {
+/* Smart AI Admin — autentikasi demo (localStorage) */
+var ADMIN_KEY = 'smartai_admin';
+
+/* Akun demo — ubah di sini kalau mau ganti email/sandi */
+var DEMO_ADMIN = {
+  nama: 'Super Admin',
   email: 'admin@smartai.id',
   password: 'admin123',
-  name: 'Admin SmartAI',
-  role: 'superadmin',
-  initials: 'AS'
+  role: 'superadmin'
 };
 
-const SESSION_KEY = 'smartai_admin';
-
-function getSession() {
+function getAdmin() {
   try {
-    const raw = localStorage.getItem(SESSION_KEY);
+    var raw = localStorage.getItem(ADMIN_KEY);
     return raw ? JSON.parse(raw) : null;
-  } catch {
+  } catch (e) {
     return null;
   }
 }
+function setAdmin(user) { localStorage.setItem(ADMIN_KEY, JSON.stringify(user)); }
+function clearAdmin() { localStorage.removeItem(ADMIN_KEY); }
 
-function setSession(data) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+function requireAdmin() {
+  var user = getAdmin();
+  if (!user) { location.replace('index.html'); return null; }
+  return user;
 }
 
-function clearSession() {
-  localStorage.removeItem(SESSION_KEY);
-}
-
-function isLoggedIn() {
-  return !!getSession();
-}
-
-function login(email, password) {
-  if (email === DEMO_ADMIN.email && password === DEMO_ADMIN.password) {
-    setSession({
-      email: DEMO_ADMIN.email,
-      name: DEMO_ADMIN.name,
-      role: DEMO_ADMIN.role,
-      initials: DEMO_ADMIN.initials,
-      loggedAt: Date.now()
-    });
-    return { ok: true };
+function loginAdmin(email, password) {
+  var em = String(email || '').trim().toLowerCase();
+  var pw = String(password || '');
+  if ((em === DEMO_ADMIN.email || em === 'admin') && pw === DEMO_ADMIN.password) {
+    var session = { nama: DEMO_ADMIN.nama, email: DEMO_ADMIN.email, role: DEMO_ADMIN.role };
+    setAdmin(session);
+    return session;
   }
-  return { ok: false, message: 'Email atau password salah.' };
+  return null;
 }
 
-function logout() {
-  clearSession();
-  location.replace('index.html');
+function logoutAdmin() {
+  clearAdmin();
+  location.href = 'index.html';
 }
 
-function requireAuth() {
-  if (!isLoggedIn()) {
-    location.replace('index.html');
-    return null;
-  }
-  return getSession();
+function initials(name) {
+  if (!name) return 'A';
+  return String(name).split(/\s+/).map(function (p) { return p[0] || ''; }).slice(0, 2).join('').toUpperCase();
 }
-
-// Expose
-window.SmartAIAuth = { getSession, setSession, clearSession, isLoggedIn, login, logout, requireAuth, DEMO_ADMIN };
