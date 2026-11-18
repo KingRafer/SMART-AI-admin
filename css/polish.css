@@ -1,0 +1,231 @@
+/* ==========================================================
+   Visual polish — more attractive UI
+   ========================================================== */
+
+/* Ambient background glow */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% -5%, rgba(45,212,191,.07), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 95% 10%, rgba(99,102,241,.06), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 100%, rgba(45,212,191,.04), transparent 50%);
+}
+.app-shell, .main-wrap, .sidebar { position: relative; z-index: 1; }
+
+/* Page entrance */
+.page {
+  animation: pageIn .4s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Stat cards — glow + lift */
+.stat-card {
+  transition: transform .2s ease, box-shadow .25s ease, border-color .2s ease;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent, var(--cyan)) 8%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity .25s;
+  pointer-events: none;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent, var(--cyan)) 35%, var(--border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent, var(--cyan)) 12%, transparent),
+    0 12px 32px -12px color-mix(in srgb, var(--accent, var(--cyan)) 25%, transparent),
+    var(--shadow-lg);
+}
+.stat-card:hover::before { opacity: 1; }
+.stat-icon {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.stat-card:hover .stat-icon {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent, var(--cyan)) 30%, transparent);
+}
+
+/* Sidebar — active glow */
+.nav-item {
+  transition: background .15s, color .15s, box-shadow .2s, transform .15s;
+  position: relative;
+}
+.nav-item.active {
+  background: color-mix(in srgb, var(--cyan) 12%, transparent);
+  color: var(--cyan);
+  box-shadow: inset 3px 0 0 var(--cyan);
+  font-weight: 600;
+}
+.nav-item.active .ico { color: var(--cyan); filter: drop-shadow(0 0 6px rgba(45,212,191,.45)); }
+.sidebar-brand .brand-mark {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.sidebar-brand:hover .brand-mark {
+  transform: scale(1.06) rotate(-3deg);
+  box-shadow: 0 0 24px rgba(45,212,191,.4);
+}
+
+/* Buttons — richer gradients */
+.btn-primary, .btn.btn-primary {
+  background: linear-gradient(145deg, #5eead4 0%, #2dd4bf 40%, #14b8a6 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 4px 14px rgba(45,212,191,.3);
+  transition: filter .15s, box-shadow .2s, transform .12s;
+}
+.btn-primary:hover, .btn.btn-primary:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.3) inset,
+    0 8px 24px rgba(45,212,191,.4);
+  transform: translateY(-1px);
+}
+.btn-primary:active, .btn.btn-primary:active {
+  transform: translateY(0) scale(.98);
+}
+.btn-success {
+  background: linear-gradient(145deg, #6ee7b7, #34d399 50%, #10b981);
+  color: #064e3b;
+  box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 4px 12px rgba(52,211,153,.25);
+}
+.btn-success:hover { filter: brightness(1.06); }
+
+/* Table rows */
+.table-wrap table tbody tr {
+  transition: background .15s ease;
+}
+.table-wrap table tbody tr:hover {
+  background: color-mix(in srgb, var(--cyan) 5%, transparent);
+}
+.table-wrap table tbody tr:hover td:first-child {
+  box-shadow: inset 2px 0 0 var(--cyan);
+}
+
+/* Panels */
+.panel {
+  transition: border-color .2s, box-shadow .25s;
+}
+.panel:hover {
+  border-color: var(--border-strong);
+}
+
+/* Bar chart animation */
+.bar-chart .bar {
+  transform-origin: bottom;
+  animation: barGrow .7s cubic-bezier(.22,1,.36,1) both;
+  background: linear-gradient(180deg, #5eead4 0%, #2dd4bf 40%, #0d9488 100%) !important;
+  border-radius: 6px 6px 2px 2px;
+  position: relative;
+  overflow: hidden;
+}
+.bar-chart .bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.2), transparent 50%);
+  pointer-events: none;
+}
+.bar-chart .bar-col:nth-child(1) .bar { animation-delay: .05s; }
+.bar-chart .bar-col:nth-child(2) .bar { animation-delay: .1s; }
+.bar-chart .bar-col:nth-child(3) .bar { animation-delay: .15s; }
+.bar-chart .bar-col:nth-child(4) .bar { animation-delay: .2s; }
+.bar-chart .bar-col:nth-child(5) .bar { animation-delay: .25s; }
+.bar-chart .bar-col:nth-child(6) .bar { animation-delay: .3s; }
+.bar-chart .bar-col:nth-child(7) .bar { animation-delay: .35s; }
+@keyframes barGrow {
+  from { transform: scaleY(0); opacity: 0; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+.bar-chart .bar:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 16px rgba(45,212,191,.35);
+}
+
+/* Activity items */
+.activity-list > li, .activity-item {
+  transition: background .15s, transform .15s;
+  border-radius: 10px;
+}
+.activity-list > li:hover, .activity-item:hover {
+  background: var(--bg-hover);
+  transform: translateX(3px);
+}
+
+/* Badges more vivid */
+.badge.ok { box-shadow: 0 0 12px color-mix(in srgb, var(--green) 20%, transparent); }
+.badge.warn { box-shadow: 0 0 12px color-mix(in srgb, var(--yellow) 18%, transparent); }
+.badge.err { box-shadow: 0 0 12px color-mix(in srgb, var(--red) 18%, transparent); }
+.badge.pkg-gold { background: linear-gradient(135deg, rgba(245,158,11,.18), rgba(245,158,11,.08)); border: 1px solid rgba(245,158,11,.25); }
+.badge.pkg-pro { background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(167,139,250,.08)); border: 1px solid rgba(167,139,250,.25); }
+.badge.pkg-basic { background: linear-gradient(135deg, rgba(52,211,153,.15), rgba(52,211,153,.06)); border: 1px solid rgba(52,211,153,.22); }
+
+/* Avatar glow */
+.avatar {
+  box-shadow: 0 0 0 2px color-mix(in srgb, hsl(var(--h,180) 60% 50%) 25%, transparent);
+  transition: transform .2s, box-shadow .2s;
+}
+.cell-user:hover .avatar {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px color-mix(in srgb, hsl(var(--h,180) 60% 50%) 40%, transparent),
+              0 0 14px color-mix(in srgb, hsl(var(--h,180) 60% 50%) 25%, transparent);
+}
+
+/* Topbar glass */
+.topbar {
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+}
+
+/* Icon buttons */
+.icon-btn {
+  transition: background .15s, color .15s, transform .15s, box-shadow .2s;
+}
+.icon-btn:hover {
+  background: var(--bg-hover);
+  color: var(--cyan);
+  transform: scale(1.06);
+}
+
+/* Scrollbar */
+.sidebar-nav::-webkit-scrollbar { width: 5px; }
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--cyan) 25%, transparent);
+  border-radius: 10px;
+}
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--cyan) 45%, transparent);
+}
+
+/* Modal */
+.modal-card, .modal {
+  animation: modalIn .28s cubic-bezier(.22,1,.36,1) both;
+  box-shadow: 0 0 0 1px var(--border-strong), 0 24px 64px -16px rgba(0,0,0,.65);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.96) translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Search focus */
+.search-box:focus-within, .search-field:focus-within input {
+  border-color: color-mix(in srgb, var(--cyan) 50%, transparent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+/* Admin chip */
+.admin-chip {
+  transition: background .15s;
+  border-radius: 12px;
+}
+.admin-chip:hover { background: var(--bg-hover); }
